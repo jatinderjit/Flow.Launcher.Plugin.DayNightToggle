@@ -4,6 +4,7 @@ import ctypes
 import os
 import sys
 import winreg
+from typing import Literal
 
 parent_folder_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(parent_folder_path)
@@ -13,15 +14,18 @@ sys.path.append(os.path.join(parent_folder_path, "plugin"))
 
 from flowlauncher import FlowLauncher
 
+Theme = Literal["light", "dark"]
+
 THEME_PATH = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 
 
 class ToggleWindowsTheme(FlowLauncher):
     def query(self, query):
+        new_theme = opposite_theme(current_theme()).capitalize()
         return [
             {
-                "Title": "Toggle Windows Theme (Light/Dark)",
-                "SubTitle": "Press enter to toggle the Windows theme",
+                "Title": f"Enable {new_theme} Mode",
+                "SubTitle": "Toggle Windows Theme (Light/Dark)",
                 "IcoPath": "Images/app.png",
                 "JsonRPCAction": {
                     "method": "toggle_windows_theme",
@@ -31,29 +35,26 @@ class ToggleWindowsTheme(FlowLauncher):
         ]
 
     def toggle_windows_theme(self):
-        toggle_windows_theme()
+        toggle_theme()
 
 
-def toggle_windows_theme():
-    if is_dark_mode():
-        enable_light_mode()
-    else:
-        enable_dark_mode()
+def toggle_theme():
+    new_theme = opposite_theme(current_theme())
+    set_theme(new_theme)
 
 
-def is_dark_mode():
-    return get_reg("AppsUseLightTheme") == 0
+def opposite_theme(theme: Theme) -> Theme:
+    return "light" if theme == "dark" else "dark"
 
 
-def enable_dark_mode():
-    set_theme(0)
+def current_theme() -> Theme:
+    if get_reg("AppsUseLightTheme") == 0:
+        return "dark"
+    return "light"
 
 
-def enable_light_mode():
-    set_theme(1)
-
-
-def set_theme(value):
+def set_theme(theme: Theme):
+    value = 0 if theme == "dark" else 1
     set_reg("AppsUseLightTheme", value)
     set_reg("SystemUsesLightTheme", value)
     broadcast_message("ImmersiveColorSet")
