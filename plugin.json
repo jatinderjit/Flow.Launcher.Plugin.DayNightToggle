@@ -1,12 +1,18 @@
 {
-    "ID": "2f4e384e-76ce-45c3-aea2-b16f5e5c328f",
-    "ActionKeyword": "th",
+    "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
+    "ID": "9ce240db-3022-4528-b97a-2f639fc21d9b",
+    "ActionKeywords": [
+        "th",
+        "theme",
+        "light",
+        "dark"
+    ],
     "Name": "Toggle Windows Theme",
     "Description": "Switch between light and dark mode in Windows.",
     "Author": "Jatinderjit Singh",
     "Version": "1.0.0",
     "Language": "python",
-    "Website": "https://github.com/jatinderjit/flow-windows-theme-toggle",
+    "Website": "https://github.com/jatinderjit/flow-launcher-windows-theme",
     "IcoPath": "Images\\app.png",
     "ExecuteFileName": "main.py"
 }
