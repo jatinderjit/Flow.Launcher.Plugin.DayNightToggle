@@ -1,3 +1,5 @@
-This is an example Python plugin project which demonstrates the interaction of request from Flow and then call back to the plugin.
+# Toggle Windows Theme
 
-You can install this plugin via `pm install Hello World Python`
+Flow Launcher plugin to toggle between light and dark themes in Windows 10/11.
+
+You can install this plugin via `pm install windows-theme-toggle`

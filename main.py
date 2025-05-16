@@ -1,45 +1,73 @@
 # -*- coding: utf-8 -*-
 
-import sys,os
+import os
+import sys
+import winreg
+
 parent_folder_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(parent_folder_path)
-sys.path.append(os.path.join(parent_folder_path, 'lib'))
-sys.path.append(os.path.join(parent_folder_path, 'plugin'))
+sys.path.append(os.path.join(parent_folder_path, "lib"))
+sys.path.append(os.path.join(parent_folder_path, "plugin"))
+
 
 from flowlauncher import FlowLauncher
-import webbrowser
+
+THEME_PATH = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 
 
-class HelloWorld(FlowLauncher):
-
+class ToggleWindowsTheme(FlowLauncher):
     def query(self, query):
         return [
             {
-                "Title": "Hello World, this is where title goes. {}".format(('Your query is: ' + query , query)[query == '']),
-                "SubTitle": "This is where your subtitle goes, press enter to open Flow's url",
+                "Title": "Toggle Windows Theme (Light/Dark)",
+                "SubTitle": "Press enter to toggle the Windows theme",
                 "IcoPath": "Images/app.png",
                 "JsonRPCAction": {
-                    "method": "open_url",
-                    "parameters": ["https://github.com/Flow-Launcher/Flow.Launcher"]
-                }
+                    "method": "toggle_windows_theme",
+                    "parameters": [],
+                },
             }
         ]
 
-    def context_menu(self, data):
-        return [
-            {
-                "Title": "Hello World Python's Context menu",
-                "SubTitle": "Press enter to open Flow the plugin's repo in GitHub",
-                "IcoPath": "Images/app.png",
-                "JsonRPCAction": {
-                    "method": "open_url",
-                    "parameters": ["https://github.com/Flow-Launcher/Flow.Launcher.Plugin.HelloWorldPython"]
-                }
-            }
-        ]
+    def toggle_windows_theme(self):
+        toggle_windows_theme()
 
-    def open_url(self, url):
-        webbrowser.open(url)
+
+def toggle_windows_theme():
+    if is_dark_mode():
+        enable_light_mode()
+    else:
+        enable_dark_mode()
+
+
+def is_dark_mode():
+    return get_reg("AppsUseLightTheme") == 0
+
+
+def enable_dark_mode():
+    set_theme(0)
+
+
+def enable_light_mode():
+    set_theme(1)
+
+
+def set_theme(value):
+    set_reg("AppsUseLightTheme", value)
+    set_reg("SystemUsesLightTheme", value)
+
+
+def get_reg(name):
+    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, THEME_PATH) as key:
+        value, _ = winreg.QueryValueEx(key, name)
+        return value
+
+
+def set_reg(name, value):
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, THEME_PATH, 0, winreg.KEY_WRITE)
+    winreg.SetValueEx(key, name, 0, winreg.REG_DWORD, value)
+    winreg.CloseKey(key)
+
 
 if __name__ == "__main__":
-    HelloWorld()
+    ToggleWindowsTheme()
