@@ -10,7 +10,7 @@
     "Name": "Toggle Windows Theme",
     "Description": "Switch between light and dark mode in Windows.",
     "Author": "Jatinderjit Singh",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Language": "python",
     "Website": "https://github.com/jatinderjit/flow-launcher-windows-theme",
     "IcoPath": "Images\\app.png",
