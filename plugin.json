@@ -15,9 +15,9 @@
         "colour"
     ],
     "Name": "DayNight Toggle",
-    "Description": "Switch between light and dark mode in Windows.",
+    "Description": "Switch between Light and Dark mode",
     "Author": "Jatinderjit Singh",
-    "Version": "1.0.1",
+    "Version": "1.0.2",
     "Language": "python",
     "Website": "https://github.com/jatinderjit/Flow.Launcher.Plugin.DayNightToggle",
     "IcoPath": "images\\app.png",

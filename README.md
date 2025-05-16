@@ -1,4 +1,4 @@
-# DayNightToggle
+# DayNight Toggle
 
 Flow Launcher plugin to toggle between light and dark mode in Windows 10/11.
 
