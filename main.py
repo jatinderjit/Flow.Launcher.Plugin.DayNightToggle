@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import ctypes
 import os
 import sys
 import winreg
@@ -55,6 +56,7 @@ def enable_light_mode():
 def set_theme(value):
     set_reg("AppsUseLightTheme", value)
     set_reg("SystemUsesLightTheme", value)
+    broadcast_message("ImmersiveColorSet")
 
 
 def get_reg(name):
@@ -67,6 +69,22 @@ def set_reg(name, value):
     key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, THEME_PATH, 0, winreg.KEY_WRITE)
     winreg.SetValueEx(key, name, 0, winreg.REG_DWORD, value)
     winreg.CloseKey(key)
+
+
+def broadcast_message(message):
+    HWND_BROADCAST = 0xFFFF
+    WM_SETTINGCHANGE = 0x001A
+    SMTO_ABORTIFHUNG = 0x0002
+
+    ctypes.windll.user32.SendMessageTimeoutW(
+        HWND_BROADCAST,
+        WM_SETTINGCHANGE,
+        0,
+        message,
+        SMTO_ABORTIFHUNG,
+        5000,  # Timeout in milliseconds
+        None,
+    )
 
 
 if __name__ == "__main__":
