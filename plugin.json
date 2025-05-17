@@ -1,23 +1,13 @@
 {
   "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
-  "ID": "03614b3c-9e7d-4bc5-9509-d7f556f1a2b1",
+  "ID": "e6162bbf-ac7c-4b43-a7f9-e71f44693f6f",
   "ActionKeywords": [
-    "daynight",
-    "dn",
-    "day",
-    "night",
-    "light",
-    "dark",
-    "toggle",
-    "theme",
-    "th",
-    "color",
-    "colour"
+    "dn"
   ],
   "Name": "DayNight Toggle",
   "Description": "Switch between Light and Dark mode",
   "Author": "Jatinderjit Singh",
-  "Version": "1.0.3",
+  "Version": "1.0.4",
   "Language": "python",
   "Website": "https://github.com/jatinderjit/Flow.Launcher.Plugin.DayNightToggle",
   "IcoPath": "images\\app.png",
